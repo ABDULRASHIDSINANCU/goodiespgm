@@ -1,0 +1,67 @@
+# input file
+inputFile = open("D:\goodies\input.txt", "r")
+# output file
+outputFile = open("D:\goodies\output.txt", "w")
+# This contains the actual goodies price in order of input file
+dictionaryOfItems = {}
+# to find goodies name from price
+reverseDictionaryOfItems = {}
+
+# Accept the input from the console
+noOfEmployees=int(input("no of employees:"))
+goodiesPriceList=[]
+
+# to load the input values in to a goodiesPriceList, dictionaryOfItems, reverseDictionaryOfItems
+for line in inputFile:
+    key, value = line.rstrip("\n").split(":")
+    value = int(value.strip())
+    goodiesPriceList.append(value)
+    dictionaryOfItems[key] = value
+    reverseDictionaryOfItems[value]=key
+
+goodiesPriceList.sort()
+print("goodiesPriceList=",goodiesPriceList)
+
+lastIndex=len(goodiesPriceList)-1
+diffBetweenMaxAndMinList=[]
+
+# looping to find the minimum difference when in sorted order
+for i in range(lastIndex):
+    diffBetweenMaxAndMin=goodiesPriceList[i+(noOfEmployees-1)]-goodiesPriceList[i]
+    print("diffBetweenMaxAndMin=",diffBetweenMaxAndMin)
+    diffBetweenMaxAndMinList.append(int(diffBetweenMaxAndMin))
+    if (i+(noOfEmployees-1)==lastIndex):
+        break
+
+minValueIndex = diffBetweenMaxAndMinList.index(min(diffBetweenMaxAndMinList))
+print("SortedPriceList=",goodiesPriceList)
+print("Goodies Selected=",minValueIndex)
+print("dictionaryOfItems=",dictionaryOfItems)
+#  final result
+print("==========Final Start===========================")
+finalselectedpricelist=[]
+
+for i in range(0,noOfEmployees):
+    selectItemPrice=goodiesPriceList[minValueIndex+i]
+    outputFile.write(reverseDictionaryOfItems[selectItemPrice] + ":" + str(selectItemPrice)+"\n")
+    print(reverseDictionaryOfItems[selectItemPrice] + ":" + str(selectItemPrice))
+
+print("==========Final End===========================")
+outputFile.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
